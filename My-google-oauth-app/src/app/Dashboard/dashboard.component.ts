@@ -8,9 +8,9 @@ const MODULES = [CommonModule];
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [...MODULES],
+  imports: [MODULES],
   templateUrl: './dashboard.Component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrl: "./dashboard.component.css",
 
 })
 

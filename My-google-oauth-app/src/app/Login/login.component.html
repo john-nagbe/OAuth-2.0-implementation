@@ -1,45 +1,11 @@
-<!-- <div class="login-button">
+<div class="login-button">
   <button mat-raised-button
-  (click)="singInWithGoogle()">
-  <img
-  src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-  alt="Google"
-  class="google-icon"
-  />
-  Sing in with Google
-</button>
-</div> -->
-
-<div class="login-container">
-  <h1>Welcome to Your App</h1>
-
-  <ng-container *ngIf="!userProfile; else loggedInContent">
-    <p>Please sign in to continue.</p>
-    <button mat-raised-button color="primary" (click)="signInWithGoogle()">
-      <mat-icon>login</mat-icon> Sign in with Google
-    </button>
-  </ng-container>
-
-  <ng-template #loggedInContent>
-    <ng-container *ngIf="userProfile as profile">
-      <h2>
-        Welcome,
-        {{ profile.given_name || 'User' }}!
-      </h2>
-      <p>You are already logged in.</p>
-      <p>Email: {{ profile.email }}</p>
-
-      <img *ngIf="profile.picture" [src]="profile.picture" alt="Profile Picture" class="profile-picture">
-
-      <button mat-raised-button color="warn" (click)="signOut()">
-        <mat-icon>logout</mat-icon> Sign Out
-      </button>
-    </ng-container>
-  </ng-template>
-
-  <mat-form-field appearance="fill" style="margin-top: 20px;">
-    <mat-label>Example Field</mat-label>
-    <input matInput placeholder="Enter something">
-  </mat-form-field>
-
+  (click)="signInWithGoogle()">
+    <img
+      src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+      alt="Google"
+      class="google-icon"
+    />
+    Sign in with Google
+  </button>
 </div>
