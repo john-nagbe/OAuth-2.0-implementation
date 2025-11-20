@@ -1,15 +1,58 @@
 
-.login-button {
-  align-content: center;
-  align-items: center;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  padding: 16px;
+.login-card {
+ /* Dimensions and Centering */
+    width: 700px; /* Adjust size as needed */
+    height: 450px;
+    display: flex; /* Key for the split layout */
+    overflow: hidden; /* Ensures no content spills outside the rounded corners */
+    border-radius: 20px; /* Rounded corners for the whole card */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background: linear-gradient(180deg, #45462A, #DC851F, #7E5920); /* Default background */
+    /* Optional: Centering the card on the page */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.login-area {
+    flex: 1; /* Takes up 50% of the width */
+    padding: 40px;
+}
+
+.welcome-area {
+    flex: 1; /* Takes up the other 50% of the width */
+    padding: 40px;
+    /* Key for the gradient background */
+    background: linear-gradient(180deg, #343330, #7E5920, #45462A);
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+  
+}
+button[mat-raised-button] {
+    /* Ensure the button is full width within its context */
+    width: 100%;
+    padding: 10px 20px;
+    margin-top: 20px;
+    /* Add any other styling for the button itself (background, border, etc.) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #343330; /* Or whatever background your mat-raised-button uses */
+    border: 1px solid #ccc; /* Give it a light border */
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
 }
 
 .google-icon {
   width: 20px;
   height: 20px;
   vertical-align: sub;
+  margin-right: 10px;
 }

@@ -1,11 +1,22 @@
-<div class="login-button">
-  <button mat-raised-button
-  (click)="signInWithGoogle()">
-    <img
-      src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-      alt="Google"
-      class="google-icon"
-    />
-    Sign in with Google
-  </button>
+<div class="login-card">
+    <div class="login-area">
+        <h1>Hello!</h1>
+        <p>Sign into your account</p> <form>
+            <button mat-raised-button (click)="signInWithGoogle()">
+                <img
+                    src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                    alt="Google"
+                    class="google-icon"
+                />
+                Sign in with Google
+            </button>
+        </form>
+    </div>
+
+    <div class="welcome-area">
+        <h2>Welcome Back!</h2>
+        <p class="description"><p> Hello I am Johnette Nagbe. I am currently a student at the university of Minnesota Morris. Nice to meet you!</p>
+        <br>
+        <p>PLEASE CLICK THE GOOGLE SIGN IN BUTTON TO SIGN IN</p>
+    </div>
 </div>
