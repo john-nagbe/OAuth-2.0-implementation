@@ -13,12 +13,12 @@ yarn_error.log*
 /out/
 
 # IEDs and other ignored files
-.idea/        # IntelliJ IDEA 
-.vscode/      # VS Code specific settings (optional, you might want to commit some of these)
-*.iml         # IntelliJ IDEA module files
-*.DS_Store    # macOS system files
-Thumbs.db     # Windows thumbnail cache
-.env          # Environment variables (sensitive)
+# Use double asterisks to find these folders anywhere
+**/.vscode/
+**/target/
+**/.idea/
+**/*.iml
+**/application.yml
 
 # Angular specific
 .angular/
