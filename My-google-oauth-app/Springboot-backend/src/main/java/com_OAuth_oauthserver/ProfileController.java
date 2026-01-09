@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProfileController {
 
     @GetMapping("/api/profile")
-    public Map<String, Object> profile(@AuthenticationPrincipal OidcUser oidcUser) {
-        return oidcUser.getClaims(); // includes email, name, picture, etc.
+public Map<String, Object> profile(@AuthenticationPrincipal OidcUser oidcUser) {
+    if (oidcUser == null) {
+        return Map.of("error", "Not authenticated");
     }
+    return oidcUser.getClaims();
+  }
 }
 

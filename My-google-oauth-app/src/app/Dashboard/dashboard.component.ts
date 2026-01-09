@@ -9,7 +9,7 @@ const MODULES = [CommonModule];
   selector: 'app-dashboard',
   standalone: true,
   imports: [MODULES],
-  templateUrl: './dashboard.Component.html',
+  templateUrl: './dashboard.component.html',
   styleUrl: "./dashboard.component.css",
 
 })

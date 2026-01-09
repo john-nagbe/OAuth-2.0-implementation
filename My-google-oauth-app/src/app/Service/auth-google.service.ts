@@ -1,59 +1,33 @@
 import { Injectable, inject, signal } from "@angular/core";
 import { Router } from "@angular/router";
-import { OAuthService } from "angular-oauth2-oidc";
-import { authConfig } from "./auth.config";
+import { HttpClient } from "@angular/common/http";
+import { Observable, tap } from "rxjs"; // Ensure 'tap' is imported
 
-
-@Injectable( {
+@Injectable({
   providedIn: 'root',
 })
-  export class AuthGoogleService{
+export class AuthGoogleService {
+  private router = inject(Router);
+  private http = inject(HttpClient);
+  profile = signal<any>(null);
 
-private oAuthService = inject(OAuthService);
-private router = inject(Router);
-profile = signal<any>(null);
-
-constructor() {
-  this.initConfiguration();
-}
-
-initConfiguration() {
-    this.oAuthService.configure(authConfig);
-    this.oAuthService.setupAutomaticSilentRefresh();
-    this.oAuthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-      // if (this.oAuthService.hasValidIdToken()) {
-      //   this.profile.set(this.oAuthService.getIdentityClaims());
-      // }
-    });
-
+  fetchProfile(): Observable<any> {
+    return this.http.get('http://localhost:8080/api/profile', {
+      withCredentials: true // Essential for sending the session cookie
+    }).pipe(
+      tap(data => {
+        console.log("Profile data received:", data);
+        this.profile.set(data); // This updates the signal so the Dashboard sees it
+      })
+    );
   }
 
-login() {
-  // This will initiate the OAuth 2.0 / OIDC login flow
-  // The user will be redirected to the identity provider (Google in this case) for authentication
-  this.oAuthService.initImplicitFlow();
-}
-
-logout() {
-  // Revoke tokens on the server and clear local session
-  this.oAuthService.revokeTokenAndLogout();
-  //this.OAuthService.logout(); This redundant if the revokedTokenAndLogout is used
-  //this.profile.set(null);
-  this.oAuthService.logOut();
-
-  //Redirect to the login page or home page after logout
-  // '/login' is often appropriately used if you have a dedicated login route
-  this.router.navigate(['/login']);
-  console.log('User logged out.');
-
-}
-getProfile() {
-  const profile = this.oAuthService.getIdentityClaims();
-  return profile;
-}
-
-getToken() {
-  return this.oAuthService.getAccessToken();
-}
+  login() {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
 
+  logout() {
+    window.location.href = 'http://localhost:8080/logout';
+    this.profile.set(null);
+  }
+}

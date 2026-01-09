@@ -5,27 +5,45 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
 
-   @Bean
-   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(Customizer.withDefaults()) // Link to your WebConfig CORS
-        .csrf(csrf -> csrf.disable())    // Recommended for dev with Angular
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/", "/error", "/webjars/**", "/login/**").permitAll()
-            .anyRequest().authenticated()
-        )
-        .oauth2Login(oauth2 -> oauth2
-            // FORCE redirect back to Angular port 4200
-            .defaultSuccessUrl("http://localhost:4200", true)
-        )
-        .logout(logout -> logout
-            .logoutSuccessUrl("http://localhost:4200").permitAll()
-        );
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .cors(Customizer.withDefaults())
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/error", "/webjars/**", "/login/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .oauth2Login(oauth2 -> oauth2
+                .defaultSuccessUrl("http://localhost:4200/dashboard", true) // Target your dashboard
+            )
+            .logout(logout -> logout
+                .logoutSuccessUrl("http://localhost:4200").permitAll()
+            );
 
-    return http.build();
-}
+        return http.build();
+    }
+
+    // ADD THIS BEAN BELOW
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
+        configuration.setAllowCredentials(true); // CRITICAL: This allows the JSESSIONID cookie
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }

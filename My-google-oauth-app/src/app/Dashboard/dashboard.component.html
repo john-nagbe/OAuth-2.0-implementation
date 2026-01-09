@@ -1,9 +1,14 @@
 <div class="dashboard">
   <h1>Dashboard - user has logged in</h1>
 
-  <p>
-    {{ profile() | json }}
-  </p>
+  <div *ngIf="profile() as user; else loading">
+    <pre>{{ user | json }}</pre>
+    <p>Welcome, {{ user.name }}</p>
+  </div>
+
+  <ng-template #loading>
+    <p>Loading user data from Google...</p>
+  </ng-template>
 
   <button (click)="logOut()">LogOut</button>
 </div>
