@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, inject, signal, effect } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthGoogleService } from "../Service/auth-google.service";
 
@@ -17,7 +17,16 @@ const MODULES = [CommonModule];
 export class DashboardComponent {
   private authService = inject(AuthGoogleService);
   private router = inject(Router);
+
+
+  activeTab = signal<'profile' | 'security'>('profile');
   profile = this.authService.profile;
+  errorMessage = this.authService.errorMessage;
+
+
+  setTab(tab: 'profile' | 'security') {
+    this.activeTab.set(tab);
+  }
 
   logOut() {
     this.authService.logout();

@@ -1,14 +1,41 @@
-<div class="dashboard">
-  <h1>Dashboard - user has logged in</h1>
+<div class="dashboard-wrapper">
+  <div class="profile-card" *ngIf="profile() as user; else loading">
 
-  <div *ngIf="profile() as user; else loading">
-    <pre>{{ user | json }}</pre>
-    <p>Welcome, {{ user.name }}</p>
+    <div class="tab-nav">
+      <button [class.active]="activeTab() === 'profile'" (click)="setTab('profile')">Profile</button>
+      <button [class.active]="activeTab() === 'security'" (click)="setTab('security')">Security</button>
+    </div>
+
+    <div class="tab-content" *ngIf="activeTab() === 'profile'">
+      <img [src]="user.picture" alt="User Image" class="profile-pic">
+      <h2>{{ user.name }}</h2>
+      <p class="email-sub">{{ user.email }}</p>
+    </div>
+
+    <div class="tab-content security-info" *ngIf="activeTab() === 'security'">
+      <h3>Account Metadata</h3>
+      <div class="meta-row">
+        <span>Google Subject ID:</span>
+        <code>{{ user.sub }}</code>
+      </div>
+      <div class="meta-row">
+        <span>Email Verified:</span>
+        <span class="status-tag">{{ user.email_verified ? 'Yes' : 'No' }}</span>
+      </div>
+      <div class="meta-row">
+        <span>Locale:</span>
+        <strong>{{ user.locale | uppercase }}</strong>
+      </div>
+      <p class="security-note">This ID is your unique identifier provided by Google OAuth2.</p>
+    </div>
+
+    <button class="logout-btn" (click)="logOut()">Log Out</button>
   </div>
 
   <ng-template #loading>
-    <p>Loading user data from Google...</p>
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <p>Syncing security credentials...</p>
+    </div>
   </ng-template>
-
-  <button (click)="logOut()">LogOut</button>
 </div>
